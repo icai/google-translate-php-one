@@ -8,8 +8,17 @@ namespace Stichoza\GoogleTranslate\Tokens;
  * Thanks to @helen5106 and @tehmaestro and few other cool guys
  * at https://github.com/Stichoza/google-translate-php/issues/32
  */
+function now() {
+    return floor(microtime(true) * 1000);
+};
+
 class GoogleTokenGenerator implements TokenProviderInterface
 {
+
+    /**
+     * @var array
+     */
+    protected $win = [ "TKK" => "0" ];
     /**
      * Generate and return a token.
      *
@@ -32,9 +41,8 @@ class GoogleTokenGenerator implements TokenProviderInterface
      */
     private function TL($a)
     {
-        $tkk = $this->TKK();
-        $b = $tkk[0];
-
+        $tkk = $this->updateTTK();
+        $b = $tkk[0] ? $tkk[0] + 0 : 0;
         for ($d = [], $e = 0, $f = 0; $f < $this->JS_length($a); $f++) {
             $g = $this->JS_charCodeAt($a, $f);
             if (128 > $g) {
@@ -70,12 +78,45 @@ class GoogleTokenGenerator implements TokenProviderInterface
         return $a.'.'.($a ^ $b);
     }
 
+    private function updateTTK($opts = ["tld" => 'cn']) {
+
+        $now = (float)floor(now() / 3600000);
+        $cnow = explode(".", $this->win["TKK"])[0];
+
+        if ((float)$cnow !== $now) {
+            $url =  'https://translate.google.'. $opts["tld"];
+
+            $ch = curl_init();
+            // Set the url, number of POST vars, POST data
+            curl_setopt($ch, CURLOPT_URL, $url);
+
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_ENCODING, 'UTF-8');
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+            curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.70 Safari/537.36");
+            // Execute post
+            $result = curl_exec($ch);
+
+            preg_match("/tkk:\s?'(.+?)'/i", $result, $matches);
+            if ($matches) {
+                $this->win["TKK"] = $matches[1];
+            }
+             // Close connection
+             curl_close($ch);
+             return explode(".", $this->win["TKK"]);
+        } else {
+            return explode(".", $this->win["TKK"]);
+        }
+
+    }
+
     /**
      * @return array
      */
     private function TKK()
     {
-        return ['406398', (561666268 + 1526272306)];
+        return [now(), (561666268 + 1526272306)];
     }
 
     /**
@@ -129,7 +170,7 @@ class GoogleTokenGenerator implements TokenProviderInterface
             $a &= 2147483647;
             $a |= 0x40000000;
             $a = ($a >> ($b - 1));
-        } else { 
+        } else {
             $a = ($a >> $b);
         }
 

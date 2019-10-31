@@ -1,13 +1,17 @@
 {
-    "name": "stichoza/google-translate-php",
+    "name": "icai/google-translate-php-one",
     "description": "Free Google Translate API PHP Package",
     "keywords": ["google", "translate", "translator", "php"],
     "license": "MIT",
-    "homepage": "http://github.com/Stichoza/google-translate-php",
+    "homepage": "http://github.com/icai/google-translate-php-one",
     "authors": [
         {
             "name": "Levan Velijanashvili",
             "email": "me@stichoza.com"
+        },
+        {
+            "name": "Terry Cai",
+            "email": "gidcai@gmail.com"
         }
     ],
     "require": {

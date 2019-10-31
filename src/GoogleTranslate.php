@@ -42,7 +42,8 @@ class GoogleTranslate
     /**
      * @var string Google Translate URL base
      */
-    protected $url = 'https://translation.googleapis.com/translate_a/t';
+
+    protected $url = 'https://translate.google.cn/translate_a/single';
 
     /**
      * @var array Dynamic GuzzleHttp client options
@@ -54,7 +55,11 @@ class GoogleTranslate
      */
     protected $urlParams = [
         'client'   => 'webapp',
-        'hl'       => 'en',
+        'hl'       => 'zh-CN',
+        'anno' => '3',
+        'v' =>  "1.0",
+        'key' => null,
+        'logld' => "vTE_20190506_00",
         'dt'       => [
             't',   // Translate
             'bd',  // Full translate with synonym ($bodyArray[1])
@@ -78,8 +83,12 @@ class GoogleTranslate
         'trs'      => 1,
         'ssel'     => 0,
         'tsel'     => 0,
-        'kc'       => 1,
+        'kc'       => 6,
         'tk'       => null,
+        'sp' => "nmt",
+        'tc' => 2,
+        'sr' => 1,
+        'mode' => 1
     ];
 
     /**
@@ -225,7 +234,7 @@ class GoogleTranslate
          * just return the string without any request to google
          */
         if ($this->source == $this->target) return $string;
-        
+
         $responseArray = $this->getResponse($string);
 
         /*
@@ -305,8 +314,13 @@ class GoogleTranslate
         $queryUrl = preg_replace('/%5B(?:[0-9]|[1-9][0-9]+)%5D=/', '=', http_build_query($queryArray));
 
         try {
-            $response = $this->client->get($this->url, [
+            $response = $this->client->request('GET', $this->url, [
                     'query' => $queryUrl,
+                    'headers' => [
+                        "User-Agent" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.70 Safari/537.36",
+                        "Accept" => "application/json, text/plain, */*",
+                        'X-Requested-With'=> 'XMLHttpRequest'
+                    ]
                 ] + $this->options);
         } catch (RequestException $e) {
             throw new ErrorException($e->getMessage());
