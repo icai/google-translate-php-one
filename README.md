@@ -1,7 +1,7 @@
 Google Translate PHP
 ====================
 
-[![Build Status](https://travis-ci.org/Stichoza/google-translate-php.svg?branch=master)](https://travis-ci.org/Stichoza/google-translate-php) [![Latest Stable Version](https://img.shields.io/packagist/v/Stichoza/google-translate-php.svg)](https://packagist.org/packages/stichoza/google-translate-php) [![Total Downloads](https://img.shields.io/packagist/dt/Stichoza/google-translate-php.svg)](https://packagist.org/packages/stichoza/google-translate-php) [![Downloads Month](https://img.shields.io/packagist/dm/Stichoza/google-translate-php.svg)](https://packagist.org/packages/stichoza/google-translate-php) [![Petreon donation](https://img.shields.io/badge/patreon-donate-orange.svg)](https://www.patreon.com/stichoza) [![PayPal donation](https://img.shields.io/badge/paypal-donate-blue.svg)](https://paypal.me/stichoza)
+[![Build Status](https://travis-ci.org/icai/google-translate-php-one.svg?branch=master)](https://travis-ci.org/icai/google-translate-php-one) [![Latest Stable Version](https://img.shields.io/packagist/v/icai/google-translate-php-one.svg)](https://packagist.org/packages/icai/google-translate-php-one) [![Total Downloads](https://img.shields.io/packagist/dt/icai/google-translate-php-one.svg)](https://packagist.org/packages/icai/google-translate-php-one) [![Downloads Month](https://img.shields.io/packagist/dm/icai/google-translate-php-one.svg)](https://packagist.org/packages/icai/google-translate-php-one) [![Petreon donation](https://img.shields.io/badge/patreon-donate-orange.svg)](https://www.patreon.com/stichoza) [![PayPal donation](https://img.shields.io/badge/paypal-donate-blue.svg)](https://paypal.me/stichoza)
 
 Free Google Translate API PHP Package. Translates totally free of charge.
 
@@ -25,10 +25,10 @@ Free Google Translate API PHP Package. Translates totally free of charge.
 Install this package via [Composer](https://getcomposer.org/).
 
 ```
-composer require stichoza/google-translate-php
+composer require icai/google-translate-php-one
 ```
 
-> Note: **PHP 7.1 or later** is required. For older versoins, use `^3.2` version of this package (see [old docs](https://github.com/Stichoza/google-translate-php/tree/3.2#google-translate-php)).
+> Note: **PHP 7.1 or later** is required. For older versoins, use `^3.2` version of this package (see [old docs](https://github.com/icai/google-translate-php-one/tree/3.2#google-translate-php)).
 
 ## Basic Usage
 
@@ -168,7 +168,7 @@ In addition, `translate()` and `trans()` methods will return `null` if there is 
 ## Known Limitations
  
  - `503 Service Unavailable` response:  
-   If you are getting this error, it is most likely that Google has banned your external IP address and/or [requires you to solve a CAPTCHA](https://github.com/Stichoza/google-translate-php/issues/18). This is not a bug in this package. Google has become stricter, and it seems like they keep lowering the number of allowed requests per IP per a certain amount of time. Try sending less requests to stay under the radar, or change your IP frequently ([for example using proxies](#http-client-configuration)). Please note that once an IP is banned, even if it's only temporary, the ban can last from a few minutes to more than 12-24 hours, as each case is different.
+   If you are getting this error, it is most likely that Google has banned your external IP address and/or [requires you to solve a CAPTCHA](https://github.com/icai/google-translate-php-one/issues/18). This is not a bug in this package. Google has become stricter, and it seems like they keep lowering the number of allowed requests per IP per a certain amount of time. Try sending less requests to stay under the radar, or change your IP frequently ([for example using proxies](#http-client-configuration)). Please note that once an IP is banned, even if it's only temporary, the ban can last from a few minutes to more than 12-24 hours, as each case is different.
  - `429 Too Many Requests` response:
    This error is basically the same as explained above.
  - `413 Request Entity Too Large` response:  
