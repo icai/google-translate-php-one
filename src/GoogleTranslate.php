@@ -42,7 +42,7 @@ class GoogleTranslate
     /**
      * @var string Google Translate URL base
      */
-    protected $url = 'https://translate.google.com/translate_a/single';
+    protected $url = 'https://translation.googleapis.com/translate_a/t';
 
     /**
      * @var array Dynamic GuzzleHttp client options
